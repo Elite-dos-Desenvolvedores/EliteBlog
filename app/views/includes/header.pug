@@ -1,0 +1,18 @@
+nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+  a.navbar-brand(href='/') Elite dos Desenvolvedores
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbarCollapse.collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li(class=isActive('/articles/new') ? 'active nav-item' : 'nav-item')
+        a.nav-link(href="/articles/new", title="new article") Novo post
+      - if (req.isAuthenticated())
+        li.nav-item(class=isActive(`/users/${req.user.id}`) && 'active')
+          a.nav-link(href="/users/"+req.user.id, title="Profile") Perfil
+        li.nav-item
+          a.nav-link(href="/logout", title="logout") Sair
+      - else
+        li(class=isActive('/login') ? 'active nav-item' : 'nav-item')
+          a.nav-link(href="/login", title="Login") Login
+
+

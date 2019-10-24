@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  include ../includes/head
+  meta(name='viewport', content='width=device-width,initial-scale=1')
+  body
+    include ../includes/header
+    .alert.alert-warning
+      |  Você esta navegando pela versão mobile!
+    .container
+      .page-header
+        block main
+      .messages
+        include ../includes/messages
+      .content
+        block content
+    include ../includes/footer
+    include ../includes/foot

@@ -1,0 +1,22 @@
+extends auth
+
+block auth
+  form.form-signin(action="/users", method="post", role="form")
+    input(type="hidden", name="_csrf", value=csrf_token)
+    .form-label-group
+      input#name.form-control(type='text' name='name' placeholder='Nome completo' required='' value=user.name)
+      label(for='name') Nome completo
+    .form-label-group
+      input#password.form-control(type='text' name='username' placeholder='Username' value=user.username)
+      label(for='username') Usuário
+    .form-label-group
+      input#email.form-control(type='email' name='email' placeholder='E-mail' required='' autofocus='' value=user.email)
+      label(for='email') E-mail
+    .form-label-group
+      input#password.form-control(type='password' name='password' placeholder='Senha' required='')
+      label(for='password') Senha
+    
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Registrar
+    .my-3.text-center
+      | ou 
+      a.show-signup(href="/login") Login

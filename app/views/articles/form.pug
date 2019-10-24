@@ -1,0 +1,42 @@
+extends ../layouts/default
+
+block main
+  h1= title
+
+block content
+  - var action = '/articles'
+  - action += article.isNew? '' : '/' + article.id
+
+  .row
+    .col-md-8
+      form(method="post", action=action, enctype="multipart/form-data", role="form")
+
+        input(type="hidden", name="_csrf", value=csrf_token)
+
+        - if (!article.isNew)
+          input(type="hidden", name="_method", value="PUT")
+
+        .form-group
+          label(for='title') Título
+          input.form-control#title(type='text', name="title", value=article.title, placeholder='Insira um título para sua postagem')
+
+        .form-group
+          label(for='file') Imagem
+          input.form-control-file#file(type='file', name="image")
+
+        .form-group
+          label(for='desc') Texto
+          textarea.form-control#desc(rows="5", name="body", placeholder='Insira o texto da sua postagem')=article.body
+
+        .form-group
+          label(for='tags') Tags
+          input.form-control#tags(type='text', name="tags", value=article.tags, placeholder='Insira as tags relacionadas a postagem')
+
+        
+        button.btn.btn-primary(type='submit') Enviar
+        | &nbsp;
+        a.btn.btn-link(href='/articles', title="cancel") Cancelar
+
+    .col-md-4
+      - if (!article.isNew && article.image && article.image.files && article.image.files.length)
+        img(src=article.image.cdnUri + "/mini_" + article.image.files[0])
