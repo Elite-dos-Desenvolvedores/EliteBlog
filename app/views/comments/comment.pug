@@ -1,5 +1,5 @@
 - if (comment && comment.user && comment.user._id)
-  - const currentname = user.name ? user.name : user.username
+  - const currentname = user ? (user.name ? user.name : user.username) : null
   - const name = comment.user.name ? comment.user.name : comment.user.username
     a(href="/users/"+comment.user._id)= name
     |  :&nbsp;
@@ -8,6 +8,6 @@
     form.form-inline(role="form" method="post" action="/articles/" + article._id + "/comments/" + comment._id, onsubmit="return confirm('Você tem certeza?')")
       input(type='hidden' name='_csrf', value=csrf_token)
       span.text-muted= formatDate(comment.createdAt)
-      - if (currentname === name)
+      - if (user && currentname === name)
         input(type="hidden" name="_method" value="DELETE")
         button.btn.btn-link.text-danger(type="submit") Deletar 
