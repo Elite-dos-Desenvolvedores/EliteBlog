@@ -2,19 +2,18 @@ article.article
   img.img-fluid(src = imageHref)
   h3
     a(href='/articles/'+article.clean_title, title=article.title) #{article.title.slice(0, 140)}
-  p= article.body.slice(0, 400)
+  p!= article.body.slice(0, 400)
 
   .meta
-    span.text-muted= moment(article.createdAt).format('DD/MM/YYYY')
+    
 
     - if (article.user)
-      | &nbsp; - &nbsp;
-      span Postado por &nbsp;
-
-      - var name = article.user.name ? article.user.name : article.user.username
-
-      a(href="/users/"+article.user.username)= name
-
+      - var name = article.user._id ? article.user.name : article.user.username
+      span Postado por 
+        b
+          a(href="/users/"+article.user.username)=name
+      span  em 
+        b.text-muted= moment(article.createdAt).format('LLL')
     - if (article.tags)
       | &nbsp; - &nbsp;
       span Tags &nbsp;

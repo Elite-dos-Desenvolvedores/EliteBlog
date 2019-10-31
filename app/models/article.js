@@ -67,6 +67,9 @@ const ArticleSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  likes: {
+    type: Number
   }
 });
 

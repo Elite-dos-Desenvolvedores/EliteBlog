@@ -13,8 +13,8 @@ div.trigger
             a.nav-link(href="/", title="Rank") Rank
           - if (req.isAuthenticated())
             li.nav-item.dropdown
-              a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                | Vitagliano
+              a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')=req.user.username
+                
               .dropdown-menu(aria-labelledby='navbarDropdown')
                 a.dropdown-item(href="/articles/new", title="Novo post") Novo post
                 a.dropdown-item(href="/users/"+req.user.username, title="Perfil") Perfil

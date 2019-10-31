@@ -25,6 +25,7 @@ const requireHttps = require('./middlewares/require-https');
 const config = require('./');
 const pkg = require('../package.json');
 const moment = require('moment');
+moment.locale('pt-BR');
 const env = process.env.NODE_ENV || 'development';
 
 

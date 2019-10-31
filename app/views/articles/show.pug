@@ -6,7 +6,7 @@ block main
 block content
   .row
     .col-md-8
-      p=article.body.slice(0, 1000)
+      p!=article.body.slice(0, 1000)
       .meta
         - if (article.user)
           - var name = article.user._id ? article.user.name : article.user.username
@@ -14,7 +14,7 @@ block content
             b
               a(href="/users/"+user.username)= user.name
         span  em 
-        b.text-muted= moment(article.createdAt).format('DD/MM/YYYY')
+        b.text-muted= moment(article.createdAt).format('LLL')
         - if (article.tags)
           p Tags &nbsp;
             each tag in article.tags.split(',').slice(0, 10)

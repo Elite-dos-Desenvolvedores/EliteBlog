@@ -23,6 +23,20 @@ nav {
   margin-bottom: 4rem;
 }
 
+nav .nav-link {
+  color: #000;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+nav .dropdown-menu {
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.5);
+  border: 0;
+}
+
 .highlighted img {
   border-radius: 5px;
 }
@@ -91,7 +105,7 @@ nav {
 
 .highlighted .highlight .highlight-info .highlight-info-title {
   text-transform: uppercase;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
   margin: 0;
 }
