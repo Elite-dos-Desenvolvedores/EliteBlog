@@ -9,10 +9,12 @@ block content
       p=article.body.slice(0, 1000)
       .meta
         - if (article.user)
-          - var name = article.user.name ? article.user.name : article.user.username
-          p Author :&nbsp;
-            a(href="/users/"+article.user._id)= name
-
+          - var name = article.user._id ? article.user.name : article.user.username
+          span Postado por 
+            b
+              a(href="/users/"+user.username)= user.name
+        span  em 
+        b.text-muted= moment(article.createdAt).format('DD/MM/YYYY')
         - if (article.tags)
           p Tags &nbsp;
             each tag in article.tags.split(',').slice(0, 10)
@@ -20,17 +22,15 @@ block content
               a.tag(href="/tags/"+tag)= tag
               | &nbsp;&nbsp;
 
-        p.text-muted= formatDate(article.createdAt, "%b %d, %Y at %I:%M %p")
-
     .col-md-4
-      - if (!article.isNew && article.image && article.image.files && article.image.files.length)
-        img(src=article.image.cdnUri + '/mini_' + article.image.files[0])
+      - if (imageHref)
+          img.img-fluid(src = imageHref)
 
-  form(action="/articles/"+article.id, method="post", onsubmit="return confirm('Are you sure?')")
-    input(type='hidden', name='_csrf', value=csrf_token)
-    a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit', title="edit") Editar
+  form(action="/articles/"+article._id, method="post" onsubmit="return confirm('Você tem certeza?')")
+    input(type='hidden' name='_csrf', value=csrf_token)
+    a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit' title="edit") Editar
     | &nbsp;
-    input(type="hidden", name="_method", value="DELETE")
+    input(type="hidden" name="_method" value="DELETE")
     button.btn.btn-link.text-danger(type="submit") Deletar
 
   br

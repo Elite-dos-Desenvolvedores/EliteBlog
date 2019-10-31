@@ -1,36 +1,43 @@
-/**
- * Expose
- */
-
-module.exports = {
-  variants: {
-    article: {
-      resize: {
-        detail: 'x440'
+exports.variants = {
+  article: {
+    thumb: {
+      options: {
+        pool: 5,
+        scale: {
+          width: 200,
+          height: 150,
+          type: 'contain'
+        },
+        crop: {
+          width: 200,
+          height: 150,
+          x: 0,
+          y: 0
+        },
+        format: 'png',
+        rotate: 'auto',
       },
-      crop: {},
-      resizeAndCrop: {
-        mini: {
-          resize: '63504@',
-          crop: '252x210'
-        }
+      rename: function (file, preset) {
+        return;
+
       }
     },
-
-    gallery: {
-      crop: {
-        thumb: '100x100'
-      }
+    large: {
+      origianl: true
     }
-  },
-
-  storage: {
-    local: {
-      provider: 'local',
-      path: '../public/images',
-      mode: 0777
-    },
-  },
-
-  debug: true
+  }
 };
+
+exports.storages = {
+  local: {
+    provider: 'local',
+    path: '/tmp',
+    mode: 0777
+  },
+  amazon: {
+    provider: 'amazon',
+    key: process.env.IMAGER_S3_KEY,
+    keyId: process.env.IMAGER_S3_KEYID,
+    container: process.env.IMAGER_S3_BUCKET
+  }
+}

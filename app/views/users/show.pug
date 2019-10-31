@@ -1,5 +1,29 @@
 extends ../layouts/default
 
+block vars
+  - var widgets = false
+
 block main
-  - var name = user.name ? user.name : user.username
-  h1= name
+  .container
+  .info
+    .row
+      .col-12.col-md-4.text-center
+        img.img-fluid.rounded.shadow-lg(src=`https://cdn.discordapp.com/avatars/${user.discord.id}/${user.avatar}` alt='Raised circle image' style='width: 180px;')
+      .col-12.col-md-8.d-flex.flex-column.align-items-center.align-items-lg-start
+        .d-flex.flex-row.align-items-start.mt-3.mt-lg-0
+          .name
+            h2.mb-0= user.name
+          button#btn.btn-danger.btn.btn-pill.btn-sm.ml-3.mt-1 Equipe
+        .stats.d-flex.flex-row.align-items-center.align-items-lg-start.text-center.text-lg-left
+          .posts.ml-2.mr-2.ml-lg-0
+            p.lead
+              b 10
+              |  posts
+          .posts.ml-2.mr-2.ml-lg-0
+            p.lead
+              span  Registrado em 
+              b= moment(user.createdAt).format('DD/MM/YYYY')
+        p.lead.mb-0.mt-2
+          b Sobre mim
+        p.lead.text-center.text-lg-left
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet ligula ut massa pharetra, sit amet imperdiet elit semper. Donec vitae risus mauris.

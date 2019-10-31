@@ -1,5 +1,7 @@
+block vars
+  - var widgets = true
 doctype html
-html(lang="en")
+html(lang="pt-BR")
   include ../includes/head.pug
   body
     include ../includes/header.pug
@@ -8,7 +10,14 @@ html(lang="en")
         block main
       .messages
         include ../includes/messages.pug
-      .content
-        block content
+      if widgets
+        .row
+          .col-md-8
+            .content
+              block content
+          .col-md-4
+            include ../includes/widgets.pug
+      - else
+          block content
     include ../includes/footer.pug
     include ../includes/foot.pug

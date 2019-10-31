@@ -6,11 +6,10 @@
 
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const UserDiscord = mongoose.model('UserDiscord');
 
 const local = require('./passport/local');
-const google = require('./passport/google');
-const twitter = require('./passport/twitter');
-const linkedin = require('./passport/linkedin');
+const discord = require('./passport/discord');
 const github = require('./passport/github');
 
 /**
@@ -26,8 +25,6 @@ module.exports = function(passport) {
 
   // use these strategies
   passport.use(local);
-  passport.use(google);
-  passport.use(twitter);
-  passport.use(linkedin);
+  passport.use(discord);
   passport.use(github);
 };

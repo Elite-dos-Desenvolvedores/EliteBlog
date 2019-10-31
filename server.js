@@ -26,7 +26,6 @@ const app = express();
 /**
  * Expose
  */
-
 module.exports = app;
 
 // Bootstrap models
@@ -44,7 +43,7 @@ connect();
 function listen() {
   if (app.get('env') === 'test') return;
   app.listen(port);
-  console.log('Express app started on port ' + port);
+  console.log('EliteBlog rodando na porta ' + port);
 }
 
 function connect() {

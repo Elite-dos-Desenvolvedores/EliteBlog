@@ -1,9 +1,10 @@
 extends ../layouts/default
 
 block main
-  h1= title
+  include ../includes/highlighted.pug
 
 block content
+
   - if (articles.length)
     each article, index in articles
       div(class=`py-4 ${index && 'border-top'}`)
@@ -16,12 +17,12 @@ block content
           li.page-item(class=item.isActive && item.type === 'PAGE' && 'active')
             a.page-link(href=`?page=${item.value}`)
               case item.type
-                when 'FIRST_PAGE_LINK': | First
-                when 'PREVIOUS_PAGE_LINK': | Previous
+                when 'FIRST_PAGE_LINK': | Primeira
+                when 'PREVIOUS_PAGE_LINK': | Anterior
                 when 'PAGE': =item.value
                 when 'ELLIPSIS': | ...
-                when 'NEXT_PAGE_LINK': | Next
-                when 'LAST_PAGE_LINK': | Last
+                when 'NEXT_PAGE_LINK': | Próximo
+                when 'LAST_PAGE_LINK': | Última          
   - else
     h4.text-muted Não temos nenhuma postagem ainda.&nbsp;
       a(href="/articles/new") Crie uma!

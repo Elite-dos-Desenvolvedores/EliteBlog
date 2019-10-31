@@ -1,0 +1,20 @@
+.card.my-4
+    h5.card-header Pesquisar
+    .card-body
+        .input-group
+            input.form-control(type='text' placeholder='Procurar por...')
+            span.input-group-btn
+                button.btn.btn-secondary(type='button') Pesquisar!
+// Categories Widget
+.card.my-4
+    h5.card-header Tags
+    .card-body
+        .row
+            .col-lg-12
+                each val in ['Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag']
+                    a(href='#').mr-1=val
+// Side Widget
+.card.my-4
+    h5.card-header Side Widget
+    .card-body
+        | You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!

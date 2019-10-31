@@ -8,24 +8,47 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 const Schema = mongoose.Schema;
-const oAuthTypes = ['github', 'twitter', 'google', 'linkedin'];
+const oAuthTypes = ['github', 'discord'];
+
 
 /**
  * User Schema
  */
 
+const UserDiscordSchema = Schema({
+  // Discord ID snowflake
+  id: String,
+  avatar: String,
+
+  // Referencia do usuário
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
+}, {
+  _id: false
+})
+
 const UserSchema = new Schema({
-  name: { type: String, default: '' },
-  email: { type: String, default: '' },
-  username: { type: String, default: '' },
-  provider: { type: String, default: '' },
-  hashed_password: { type: String, default: '' },
-  salt: { type: String, default: '' },
-  authToken: { type: String, default: '' },
-  twitter: {},
+  name: String,
+  email: String,
+  username: String,
+  provider: String,
+  avatar: String,
+  hashed_password: { type: String, select: false },
+  createdAt: { type: Date, default: Date.now },
+  isAdmin: {type: Boolean, default: false },
+  isReporter: {type: Boolean, default: false },
+  salt: { type: String },
+  authToken: { type: String, default: '', select: false },
   github: {},
-  google: {},
-  linkedin: {}
+  discord: {
+    type: UserDiscordSchema,
+    default: UserDiscordSchema,
+    required: false
+  }
+}, {
+  versionKey: 0
 });
 
 const validatePresenceOf = value => value && value.length;
@@ -140,7 +163,7 @@ UserSchema.methods = {
         .update(password)
         .digest('hex');
     } catch (err) {
-      return '';
+      throw err
     }
   },
 
@@ -167,11 +190,9 @@ UserSchema.statics = {
    */
 
   load: function(options, cb) {
-    options.select = options.select || 'name username';
-    return this.findOne(options.criteria)
-      .select(options.select)
-      .exec(cb);
+    return this.findOne(options.criteria).exec(cb);
   }
 };
 
 mongoose.model('User', UserSchema);
+mongoose.model('UserDiscord', UserDiscordSchema);

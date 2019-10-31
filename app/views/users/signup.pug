@@ -1,5 +1,8 @@
 extends auth
 
+block vars
+  - var widgets = false
+
 block auth
   form.form-signin(action="/users", method="post", role="form")
     input(type="hidden", name="_csrf", value=csrf_token)

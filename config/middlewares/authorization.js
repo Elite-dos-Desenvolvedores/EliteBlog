@@ -30,7 +30,7 @@ exports.user = {
 
 exports.article = {
   hasAuthorization: function (req, res, next) {
-    if (req.article.user.id != req.user.id) {
+    if (!req.article.user._id.equals(req.user._id) && !req.user.isAdmin) {
       req.flash('info', 'Você não tem autorização para fazer isso!');
       return res.redirect('/articles/' + req.article.id);
     }

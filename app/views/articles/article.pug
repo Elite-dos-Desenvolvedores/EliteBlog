@@ -1,11 +1,11 @@
 article.article
-  img(src=article.image.cdnUri + '/mini_' + article.image.files[0])
+  img.img-fluid(src = imageHref)
   h3
-    a(href='/articles/'+article._id, title=article.title) #{article.title.slice(0, 140)}
+    a(href='/articles/'+article.clean_title, title=article.title) #{article.title.slice(0, 140)}
   p= article.body.slice(0, 400)
 
   .meta
-    span.text-muted= formatDate(article.createdAt)
+    span.text-muted= moment(article.createdAt).format('DD/MM/YYYY')
 
     - if (article.user)
       | &nbsp; - &nbsp;
@@ -13,7 +13,7 @@ article.article
 
       - var name = article.user.name ? article.user.name : article.user.username
 
-      a(href="/users/"+article.user._id)= name
+      a(href="/users/"+article.user.username)= name
 
     - if (article.tags)
       | &nbsp; - &nbsp;

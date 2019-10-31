@@ -1,5 +1,8 @@
 extends ../layouts/default
 
+block vars
+  - var widgets = false
+
 block main
   center
     h1= title
@@ -7,16 +10,10 @@ block main
 block content
   .text-center.my-4
     a(href="/auth/github")
-      i.fa.fa-github.fa-3x.mx-3
+      i.fab.fa-github-square.fa-3x.mx-3
     | &nbsp;&nbsp;
-    a(href="/auth/twitter")
-      i.fa.fa-twitter.fa-3x.mx-3
-    | &nbsp;&nbsp;
-    a(href="/auth/google")
-      i.fa.fa-google.fa-3x.mx-3
-    | &nbsp;&nbsp;
-    a(href="/auth/linkedin")
-      i.fa.fa-linkedin.fa-3x.mx-3
+    a(href="/auth/discord")
+      i.fab.fa-discord.fa-3x.mx-3
     | &nbsp;&nbsp;
 
   .text-center

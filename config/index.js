@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-
 const path = require('path');
 
 const development = require('./env/development');

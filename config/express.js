@@ -24,14 +24,18 @@ const ultimatePagination = require('ultimate-pagination');
 const requireHttps = require('./middlewares/require-https');
 const config = require('./');
 const pkg = require('../package.json');
-
+const moment = require('moment');
 const env = process.env.NODE_ENV || 'development';
+
+
 
 /**
  * Expose
  */
 
 module.exports = function(app, passport) {
+  app.locals.moment = require('moment');
+  
   app.use(helmet());
   app.use(requireHttps);
 
