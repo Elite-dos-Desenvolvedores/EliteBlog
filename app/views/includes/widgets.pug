@@ -1,20 +1,27 @@
+.card
+  h5.card-header Tags
+  .card-body
+    .row
+      .col-lg-12
+        each val in ['Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag']
+          a(href='#').mr-1=val
+// Discord Widget
 .card.my-4
-    h5.card-header Pesquisar
-    .card-body
-        .input-group
-            input.form-control(type='text' placeholder='Procurar por...')
-            span.input-group-btn
-                button.btn.btn-secondary(type='button') Pesquisar!
-// Categories Widget
-.card.my-4
-    h5.card-header Tags
-    .card-body
-        .row
-            .col-lg-12
-                each val in ['Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag']
-                    a(href='#').mr-1=val
+  .card-body
+    .discord-widget
+      .discord-header
+        h2 Discord
+        #members-count
+      .discord-body
+        .discord-list
+          table#members-list
+        a(onclick="javascript:window.open('https://discord.gg/EhjgQ24'); return false;")
+        button.discord-btn
+          span Participe já
+
+
 // Side Widget
 .card.my-4
-    h5.card-header Side Widget
-    .card-body
-        | You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+  h5.card-header Side Widget
+  .card-body
+    | You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!

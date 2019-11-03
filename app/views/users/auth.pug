@@ -8,18 +8,14 @@ block main
     h1= title
 
 block content
-  .text-center.my-4
-    a(href="/auth/github")
-      i.fab.fa-github-square.fa-3x.mx-3
-    | &nbsp;&nbsp;
-    a(href="/auth/discord")
-      i.fab.fa-discord.fa-3x.mx-3
-    | &nbsp;&nbsp;
-
-  .text-center
-    br
-    h2 ou
-    br
 
   .login
     block auth
+  .text-center.my-4
+    a(href="/auth/github")
+      i.fab.fa-github-square.fa-3x.mx-3
+    a(href="/auth/discord")
+      i.fab.fa-discord.fa-3x.mx-3
+
+
+

@@ -1,27 +1,30 @@
-div.trigger  
-  nav.navbar.navbar-expand-md.sticky-top
-    .container
-      a.navbar-brand(href='/')
-        img(src="https://i.imgur.com/XonRU0G.png", alt="")
-      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarCollapse.collapse.navbar-collapse
-        ul.navbar-nav.ml-auto
-          li(class=isActive('/') ? 'active nav-item' : 'nav-item')
-            a.nav-link(href="/", title="Inicio") Inicio
-          li(class=isActive('/') ? 'active nav-item' : 'nav-item')
-            a.nav-link(href="/", title="Rank") Rank
-          - if (req.isAuthenticated())
-            li.nav-item.dropdown
-              a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')=req.user.username
-                
-              .dropdown-menu(aria-labelledby='navbarDropdown')
-                a.dropdown-item(href="/articles/new", title="Novo post") Novo post
-                a.dropdown-item(href="/users/"+req.user.username, title="Perfil") Perfil
-                .dropdown-divider
-                a.dropdown-item(href="/logout", title="Sair") Sair
-          - else
-            li(class=isActive('/login') ? 'active nav-item' : 'nav-item')
-              a.nav-link(href="/login", title="Login") Login
+div.nav-handler
+  div.trigger#trigger  
+    nav.navbar.navbar-expand-md.sticky-top
+      .container
+        a.navbar-brand(href='/')
+          img(src="https://i.imgur.com/XonRU0G.png", alt="")
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarCollapse.collapse.navbar-collapse
+          ul.navbar-nav.ml-auto
+            li(class=isActive('/') ? 'active nav-item' : 'nav-item')
+              a.nav-link(href="/", title="Inicio") Inicio
+            li(class=isActive('/') ? 'active nav-item' : 'nav-item')
+              a.nav-link(href="/", title="Rank") Rank
+            - if (req.isAuthenticated())
+              li.nav-item.dropdown
+                a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')=req.user.username
+                  
+                .dropdown-menu(aria-labelledby='navbarDropdown')
+                  a.dropdown-item(href="/articles/new", title="Novo post") Novo post
+                  a.dropdown-item(href="/users/"+req.user.username, title="Perfil") Perfil
+                  .dropdown-divider
+                  a.dropdown-item(href="/logout", title="Sair") Sair
+            - else
+              li(class=isActive('/login') ? 'active nav-item' : 'nav-item')
+                a.nav-link(href="/login", title="Login") Login
+            form#search(action='/search' method='GET' enctype='multipart/form-data')
+              input(type='search' placeholder='Procurar...')
 
 

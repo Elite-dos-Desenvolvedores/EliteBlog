@@ -2,6 +2,15 @@ extends layouts/default
 
 block vars
   - var widgets = false
+  - var header = false
 
 block main
-  h2 404 - Not found
+  .container.not-found
+    .text-center.align-self-center
+      h1
+        | 4
+        span.text-info 0
+        | 4
+      h3.tx-36.tx-gray-100 Página não encontrada!
+      p.tx-gray-200 Parece que você esta procurando uma página que não existe.
+

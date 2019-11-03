@@ -4,19 +4,29 @@ body {
   background-color: #F7F8FA;
   padding-top: 4rem;
   font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
 
+/* NAVBAR */
 
 .fixed .sticky-top {
   background-color: #F7F8FA !important;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   top: 0;
   transition: all 0.45s ease-in;
 }
 
 .sticky-top {
   transition: all 0.25s ease-in;
+}
+
+.nav-handler {
+  display: flex;
+  height: 200px;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
 }
 
 nav {
@@ -28,6 +38,7 @@ nav .nav-link {
   font-weight: 800;
   text-transform: uppercase;
   font-size: 14px;
+  margin: 0px 10px;
 }
 
 nav .dropdown-menu {
@@ -36,6 +47,71 @@ nav .dropdown-menu {
   box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.5);
   border: 0;
 }
+
+/* SEARCH */
+
+#search input[type=search] {
+  background: url(https://i.imgur.com/FJH8m4B.png) no-repeat 5px center;
+  border: 0;
+  background-size: 30px;
+  padding: 9px 10px 9px 32px;
+  width: 30px;
+  cursor: pointer;
+  -webkit-border-radius: 3em;
+  -moz-border-radius: 3em;
+  border-radius: 3em;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  transition: all .5s;
+}
+
+#search input[type=search]:hover {
+  background-color: #fcfcfc;
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  border: 0;
+}
+
+#search input[type=search]:focus {
+  width: 230px;
+  padding-left: 40px;
+  color: #000;
+  background-color: #fff;
+  cursor: auto;
+  outline: none;
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  border: 0;
+}
+
+#search input[type=search]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+#search input[type=search]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* clears the 'X' from Chrome */
+#search input[type="search"]::-webkit-search-decoration,
+#search input[type="search"]::-webkit-search-cancel-button,
+#search input[type="search"]::-webkit-search-results-button,
+#search input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+
+/* END SEARCH */
+
+/* END NAVBAR */
+
+/* HIGHLIGHT */
 
 .highlighted img {
   border-radius: 5px;
@@ -67,12 +143,25 @@ nav .dropdown-menu {
   overflow: hidden;
   background-position: center center;
   background-repeat: no-repeat;
+  border-radius: 5px;
 }
 
 .highlighted .highlight .highlight-image {
   width: 100%;
   height: 100%;
   transition: transform .3s;
+  border-radius: 5px;
+}
+
+.highlight:hover .highlight-image {
+  -webkit-transform: scale(1.03);
+  -ms-transform: scale(1.03);
+  -webkit-transform: scale(1.03);
+  -ms-transform: scale(1.03);
+  -webkit-transform: scale(1.03);
+  -ms-transform: scale(1.03);
+  transform: scale(1.03);
+  border-radius: 5px;
 }
 
 .highlighted .highlight .highlight-info {
@@ -110,6 +199,204 @@ nav .dropdown-menu {
   margin: 0;
 }
 
+/* END HIGHLIGHT */
+
+/* WIDGETS */
+
+/* DISCORD */
+
+.discord-widget {
+  height: 340px;
+  width: 300px;
+  margin: 0 auto;
+  border-radius: 5px;
+  /* padding-bottom: 40px; */
+}
+
+.discord-header {
+  position: relative;
+  /* height: 40px; */
+  height: 70px;
+}
+
+.discord-header h2 {
+  font-weight: 800;
+  font-size: 20px;
+  display: inline-block;
+  line-height: 3.5;
+}
+
+.discord-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100%;
+  position: relative;
+}
+
+.discord-list {
+  position: relative;
+  width: 100%;
+  max-height: 210px;
+  display: inline-block;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.discord-list:hover {
+  overflow: auto;
+}
+
+.discord-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.discord-list::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 5px;
+}
+ 
+/* Handle */
+.discord-list::-webkit-scrollbar-thumb {
+  background: #64C9FF;
+  border-radius: 5px; 
+  transition: all ease-in-out .3s;
+}
+
+/* Handle on hover */
+.discord-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(86, 174, 221);
+  border-radius: 5px; 
+  transition: all ease-in-out .3s;
+}
+
+#members-count {
+  font-size: 14px;
+  font-weight: 800;
+  display: inline-block;
+  position: absolute;
+  top: calc(50% - 10px);
+  right: 10px;
+}
+
+.member-label {
+  font-weight: normal;
+  position: relative;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+}
+
+#members-list img {
+  width: 20px;
+  border-radius: 50%;
+}
+
+.member-avatar {
+  padding-right: 7px;
+}
+
+#members-list td.member-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table {
+  table-layout: fixed;
+}
+
+/* Workaround, if page has colliding rules */
+.discord-widget *>tr {
+  background-color: transparent !important;
+}
+
+.discord-btn {
+  margin-top: 10px;
+  background-color: transparent;
+  border: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.discord-btn span {
+  background-color: #64c9ff;
+  color: #fff;
+  padding: 7px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  max-height: 35px;
+  transition: all ease-in-out .3s;
+}
+
+.discord-btn:hover span {
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+  transition: all ease-in-out .3s;
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+}
+
+
+@-webkit-keyframes pulse {
+  0% {
+    opacity: .3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .3;
+  }
+}
+
+@-moz-keyframes pulse {
+  0% {
+    opacity: .3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .3;
+  }
+}
+
+@-o-keyframes pulse {
+  0% {
+    opacity: .3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .3;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: .3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .3;
+  }
+}
+
+/* END DISCORD */
+
+/* END WIDGETS */
 
 /* floating labels */
 
@@ -205,3 +492,36 @@ nav .dropdown-menu {
     color: #777;
   }
 }
+
+/* FOOTER */
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.footer .container {
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 3rem 0;
+}
+
+/* END FOOTER */
+
+/* NOT FOUND 404 */
+
+.not-found .card {
+  border: 0;
+}
+
+.not-found h1 {
+  font-size: 100px;
+  font-weight: 800;
+}
+
+.not-found h1 span.text-info {
+  color: #64c9ff;
+}
+
+/* END NOT FOUND 404 */

@@ -76,6 +76,7 @@ app.delete(
 // tag routes
 app.get('/tags/:tag', tags.index);
 
+
 /**
  * Error handling
  */
@@ -114,8 +115,8 @@ app.use(function (req, res) {
   
   // Só mostra o erro em formato JSON e for em modo desenvolvimento
   // se for em produção aparece a página 404.
-  if (process.env.NODE_ENV === 'development' && req.accepts('json'))
-    return res.status(404).json(payload);
+  //if (process.env.NODE_ENV === 'development' && req.accepts('json'))
+  //  return res.status(404).json(payload);
 
   res.status(404).render('404', payload);
 });
