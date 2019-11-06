@@ -205,7 +205,6 @@ ArticleSchema.statics = {
         _id
       })
       .populate('user', 'name email username')
-      .populate('comments.user')
       .exec();
   },
 

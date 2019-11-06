@@ -1,7 +1,7 @@
 - if (comment && comment.user && comment.user._id)
   - const currentname = user ? (user.name ? user.name : user.username) : null
   - const name = comment.user.name ? comment.user.name : comment.user.username
-    a(href="/users/"+comment.user._id)= name
+    a(href="/users/"+comment.user._id)= comment.user.username
     |  :&nbsp;
     = comment.body.slice(0, 1000)
 

@@ -4,7 +4,6 @@ block main
   include ../includes/highlighted.pug
 
 block content
-
   - if (articles.length)
     each article, index in articles
       div(class=`py-4 ${index && 'border-top'}`)

@@ -1,6 +1,6 @@
 - const logged = user ? (user.name ? user.name : user.username) : null
 
-form(method="post", action=`/articles/${article._id}/comments`, role="form")
+form(method="post", action=`/articles/${article.clean_title}/comments`, role="form")
 - if (logged)
   input(type='hidden', name='_csrf', value=csrf_token)
   .form-group

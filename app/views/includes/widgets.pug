@@ -1,17 +1,23 @@
-.card
-  h5.card-header Tags
+.card.my-4.tags
+  .card-header 
+    h2 Tags
   .card-body
-    .row
-      .col-lg-12
-        each val in ['Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag', 'Tag']
-          a(href='#').mr-1=val
+    ul
+      - var tags = [];
+      each article in allArticles
+        each tag in article.tags.split(',').slice(0, 10)
+          - if(!tags.includes(tag))
+            - tags.push(tag)
+              a.tag(href="/tags/"+tag)
+               li= tag
+
 // Discord Widget
 .card.my-4
-  .card-body
-    .discord-widget
-      .discord-header
-        h2 Discord
-        #members-count
+  .discord-widget
+    .card-header
+      h2 Discord
+      #members-count
+    .card-body
       .discord-body
         .discord-list
           table#members-list

@@ -2,39 +2,44 @@ extends ../layouts/default
 
 block main
 
+block vars
+  - var widgets = false
+
 block content
-  .row
-    .col-md-12
-    - if (imageHref)
-        img.img-fluid(src = imageHref)
-        h1= article.title.slice(0, 400)
-        p!=article.body.slice(0, 1000)
-        .meta
-          - if (article.user)
-            - var name = article.user._id ? article.user.name : article.user.username
-            span Postado por 
-              b
-                a(href="/users/"+article.user)= name
-          span  em 
-          b.text-muted= moment(article.createdAt).format('LLL')
-          - if (article.tags)
-            p Tags &nbsp;
-              each tag in article.tags.split(',').slice(0, 10)
-                i.text-muted.fa.fa-tag &nbsp;
-                a.tag(href="/tags/"+tag)= tag
-                | &nbsp;&nbsp;
+  article.article
+    .row
+      .col-md-8
+        - if (imageHref)
+          img.img-fluid.post-img(src = imageHref)
+          h1= article.title.slice(0, 400)
+          p!=article.body.slice(0, 1000)
+          .meta
+            - if (article.user)
+              - var name = article.user._id ? article.user.name : article.user.username
+              img.img-fluid.rounded.shadow-lg(src=`https://cdn.discordapp.com/avatars/${user.discord.id}/${user.avatar}` alt=user.name style='width: 180px;')
+              span Postado por 
+                b
+                  a(href="/users/"+article.user)= name
+            span  em 
+            b.text-muted= moment(article.createdAt).format('LLL')
+            - if (article.tags)
+              p Tags &nbsp;
+                each tag in article.tags.split(',').slice(0, 10)
+                  i.text-muted.fa.fa-tag &nbsp;
+                  a.tag(href="/tags/"+tag)= tag
+                  | &nbsp;&nbsp;
 
 
-  form(action="/articles/"+article._id, method="post" onsubmit="return confirm('Você tem certeza?')")
-    input(type='hidden' name='_csrf', value=csrf_token)
-    a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit' title="edit") Editar
-    | &nbsp;
-    input(type="hidden" name="_method" value="DELETE")
-    button.btn.btn-link.text-danger(type="submit") Deletar
+    form(action="/articles/"+article._id, method="post" onsubmit="return confirm('Você tem certeza?')")
+      input(type='hidden' name='_csrf', value=csrf_token)
+      a.btn.btn-outline-primary(href='/articles/'+article._id+'/edit' title="edit") Editar
+      | &nbsp;
+      input(type="hidden" name="_method" value="DELETE")
+      button.btn.btn-link.text-danger(type="submit") Deletar
 
-  br
-  h3 Comentários
-  each comment, index in article.comments
-    div(class=`py-3 ${index && 'border-top'}`)
-      include ../comments/comment
-  include ../comments/form
+    br
+    h3 Comentários
+    each comment, index in article.comments
+      div(class=`py-3 ${index && 'border-top'}`)
+        include ../comments/comment
+    include ../comments/form

@@ -7,6 +7,14 @@ body {
   overflow-x: hidden;
 }
 
+::-moz-selection {
+  background: #64C9FF;
+}
+
+::selection {
+  background: #64C9FF;
+}
+
 /* NAVBAR */
 
 .fixed .sticky-top {
@@ -203,32 +211,38 @@ nav .dropdown-menu {
 
 /* WIDGETS */
 
+.card {
+  border: 0;
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+}
+
 /* DISCORD */
 
 .discord-widget {
-  height: 340px;
   width: 300px;
   margin: 0 auto;
   border-radius: 5px;
   /* padding-bottom: 40px; */
 }
 
-.discord-header {
+.card-header {
   position: relative;
-  /* height: 40px; */
   height: 70px;
+  background-color: transparent !important;
+  border: 0;
 }
 
-.discord-header h2 {
+.card-header h2 {
   font-weight: 800;
   font-size: 20px;
   display: inline-block;
-  line-height: 3.5;
+  line-height: 2.3;
 }
 
 .discord-body {
-  padding-left: 20px;
-  padding-right: 20px;
   height: 100%;
   position: relative;
 }
@@ -252,21 +266,21 @@ nav .dropdown-menu {
 
 /* Track */
 .discord-list::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
   border-radius: 5px;
 }
- 
+
 /* Handle */
 .discord-list::-webkit-scrollbar-thumb {
   background: #64C9FF;
-  border-radius: 5px; 
+  border-radius: 5px;
   transition: all ease-in-out .3s;
 }
 
 /* Handle on hover */
 .discord-list::-webkit-scrollbar-thumb:hover {
   background: rgb(86, 174, 221);
-  border-radius: 5px; 
+  border-radius: 5px;
   transition: all ease-in-out .3s;
 }
 
@@ -274,9 +288,8 @@ nav .dropdown-menu {
   font-size: 14px;
   font-weight: 800;
   display: inline-block;
-  position: absolute;
-  top: calc(50% - 10px);
-  right: 10px;
+  float: right;
+  line-height: 3.4;
 }
 
 .member-label {
@@ -395,6 +408,43 @@ table {
 }
 
 /* END DISCORD */
+
+/* TAGS */
+
+.tags .card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0 1.25rem;
+}
+
+.tags .card-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tags .card-body ul a {
+  display: inline-block;
+  color: #FFF;
+  text-decoration: none;
+  margin: 5px;
+  background-color: #5bb8ea;
+  padding: 8px;
+  font-weight: 700;
+  border-radius: 5px;
+  font-size: 14px;
+  text-transform: capitalize;
+  transition: all ease-in-out .3s;
+}
+
+.tags .card-body ul a:hover {
+  background-color: #54aad8;
+  -webkit-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 12px -3px rgba(0, 0, 0, 0.3);
+  transition: all ease-in-out .3s;
+}
+
+/* END TAGS */
 
 /* END WIDGETS */
 
@@ -525,3 +575,37 @@ table {
 }
 
 /* END NOT FOUND 404 */
+
+/* POST */
+
+.article .post-img {
+  border-radius: 5px;
+}
+
+.article blockquote {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  margin: 10px 0;
+  padding: 50px 18% 30px 30px;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: justify;
+  quotes: none;
+  font-weight: 800;
+  box-sizing: border-box;
+  color: #fff;
+  background-color: #54aad8;
+  border-radius: 3px;
+}
+
+.article blockquote:after {
+  content: url(../images/quote.svg);
+  position: absolute;
+  right: 40px;
+  top: 53px;
+  width: 70px;
+}
+
+/* END POST */
