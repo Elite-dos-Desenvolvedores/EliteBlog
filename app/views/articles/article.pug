@@ -1,9 +1,8 @@
 article.article
-  - if (article.imageHref)
   img.img-fluid(src = article.imageHref)
   h3
     a(href='/articles/'+article.clean_title, title=article.title) #{article.title.slice(0, 140)}
-  p!= article.body.slice(0, 400)
+  p= article.body.slice(0, 400)
   .meta
     - if (article.user)
       - var name = article.user._id ? article.user.name : article.user.username

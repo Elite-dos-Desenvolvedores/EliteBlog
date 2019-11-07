@@ -3,7 +3,8 @@
 /*
  * Module dependencies.
  */
-
+const mongoose = require('mongoose');
+const Article = mongoose.model('Article');
 const users = require('../app/controllers/users');
 const articles = require('../app/controllers/articles');
 const comments = require('../app/controllers/comments');
@@ -48,76 +49,82 @@ module.exports = function (app, passport) {
   app.get('/auth/discord/callback', pauth('discord', fail), users.authCallback);
 
 
-app.param('userId', users.load);
+  app.param('userId', users.load);
 
-// article routes
-app.param('id', articles.load);
-app.get('/articles', articles.index);
-app.get('/articles/new', auth.requiresLogin, articles.new);
-app.post('/articles', auth.requiresLogin, articles.create);
-app.get('/articles/:id', articles.show);
-app.get('/articles/:id/edit', articleAuth, articles.edit);
-app.put('/articles/:id', articleAuth, articles.update);
-app.delete('/articles/:id', articleAuth, articles.destroy);
+  // article routes
+  app.param('id', articles.load);
+  app.get('/articles', articles.index);
+  app.get('/articles/new', auth.requiresLogin, articles.new);
+  app.post('/articles', auth.requiresLogin, articles.create);
+  app.get('/articles/:id', articles.show);
+  app.get('/articles/:id/edit', articleAuth, articles.edit);
+  app.post('/articles/:id/like', articleAuth, articles.like)
+  app.put('/articles/:id', articleAuth, articles.update);
+  app.delete('/articles/:id', articleAuth, articles.destroy);
 
-// home route
-app.get('/', articles.index);
+  // home route
+  app.get('/', articles.index);
 
-// comment routes
-app.param('commentId', comments.load);
-app.post('/articles/:id/comments', auth.requiresLogin, comments.create);
-app.get('/articles/:id/comments', auth.requiresLogin, comments.create);
-app.delete(
-  '/articles/:id/comments/:commentId',
-  commentAuth,
-  comments.destroy
-);
+  // comment routes
+  // app.param('commentId', comments.load);
+  app.post('/articles/:id/comments', auth.requiresLogin, comments.create);
+  app.get('/articles/:id/comments', auth.requiresLogin, comments.create);
+  app.delete(
+    '/articles/:id/comments/:commentId',
+    commentAuth,
+    comments.destroy
+  );
 
-// tag routes
-app.get('/tags/:tag', tags.index);
+  // tag routes
+  app.get('/tags/:tag', tags.index);
 
+  app.use(async function (err, req, res, next) {
+    var tags = (await Article.find({}, "tags"))
+    console.log("Tags:", tags);
+    req.allTags = tags;
+    next();
+  });
 
-/**
- * Error handling
- */
+  /**
+   * Error handling
+   */
+  app.use(function (err, req, res, next) {
+    // treat as 404
+    if (
+      err.message &&
+      (~err.message.indexOf('not found') ||
+        ~err.message.indexOf('Cast to ObjectId failed'))
+    ) {
+      return next();
+    }
 
-app.use(function (err, req, res, next) {
-  // treat as 404
-  if (
-    err.message &&
-    (~err.message.indexOf('not found') ||
-      ~err.message.indexOf('Cast to ObjectId failed'))
-  ) {
-    return next();
-  }
+    console.error(err.stack);
 
-  console.error(err.stack);
+    if (err.stack.includes('ValidationError')) {
+      res.status(422).render('422', {
+        error: err.stack
+      });
+      return;
+    }
 
-  if (err.stack.includes('ValidationError')) {
-    res.status(422).render('422', {
+    // error page
+    res.status(500).render('500', {
       error: err.stack
     });
-    return;
-  }
-
-  // error page
-  res.status(500).render('500', {
-    error: err.stack
   });
-});
 
-// assume 404 since no middleware responded
-app.use(function (req, res) {
-  const payload = {
-    url: req.originalUrl,
-    error: 'Not found'
-  };
-  
-  // Só mostra o erro em formato JSON e for em modo desenvolvimento
-  // se for em produção aparece a página 404.
-  //if (process.env.NODE_ENV === 'development' && req.accepts('json'))
-  //  return res.status(404).json(payload);
+  // assume 404 since no middleware responded
+  app.use(function (req, res) {
+    const payload = {
+      url: req.originalUrl,
+      error: 'Not found'
+    };
 
-  res.status(404).render('404', payload);
-});
+    // Só mostra o erro em formato JSON e for em modo desenvolvimento
+    // se for em produção aparece a página 404.
+    //if (process.env.NODE_ENV === 'development' && req.accepts('json'))
+    //  return res.status(404).json(payload);
+
+    res.status(404).render('404', payload);
+  });
 };

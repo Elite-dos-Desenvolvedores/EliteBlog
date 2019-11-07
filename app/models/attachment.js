@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Você pode usar pra avatar do usuário ou artigo e outros trecos
 const AttachmentSchema = new mongoose.Schema({
     id: {
         type: String, // snowflake

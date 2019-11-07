@@ -9,8 +9,7 @@ block content
   article.article
     .row
       .col-md-8
-        - if (imageHref)
-          img.img-fluid.post-img(src = imageHref)
+          img.img-fluid.post-img(src = article.imageHref)
           h1= article.title.slice(0, 400)
           p!=article.body.slice(0, 1000)
           .meta
@@ -38,6 +37,13 @@ block content
       button.btn.btn-link.text-danger(type="submit") Deletar
 
     br
+    p
+      span#likes=article.likes.length
+    form.form-inline(role="form" method="post" id="add_like" data-article=article._id)
+      input(type='hidden' name='_csrf', value=csrf_token)
+      - var liked = article.hasLiked
+      button.btn.btn-primary(type="submit" id="unlike_button" style={display: liked ? 'block' : 'none'}) Remover like
+      button.btn.btn-primary(type="submit" id="like_button" style={display: liked ? 'none' : 'block'}) Dar like
     h3 Comentários
     each comment, index in article.comments
       div(class=`py-3 ${index && 'border-top'}`)

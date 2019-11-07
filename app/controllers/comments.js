@@ -9,11 +9,12 @@ const { wrap: async } = require('co');
 /**
  * Load comment
  */
+exports.load = async function(req, res, next, id) {
+  var comment = await req.article.comments.find(comment => comment.id === id).populate('user').exec();
+  if (!comment)
+    return next(new Error('Comentário não encontrado.'));
 
-exports.load = function(req, res, next, id) {
-  req.comment = req.article.comments.find(comment => comment.id === id).populate('user').exec();
-
-  if (!req.comment) return next(new Error('Comentário não encontrado.'));
+  req.comment = comment;
   next();
 };
 

@@ -1,9 +1,7 @@
 extends ../layouts/default
 
-block main
-  include ../includes/highlighted.pug
-
 block content
+  h1=title
   - if (allArticles.length)
     each article, index in allArticles
       div(class=`py-4 ${index && 'border-top'}`)
@@ -23,5 +21,5 @@ block content
                 when 'NEXT_PAGE_LINK': | Próximo
                 when 'LAST_PAGE_LINK': | Última          
   - else
-    h4.text-muted Não temos nenhuma postagem ainda.&nbsp;
+    h4.text-muted Nenhum artigo encontrado.&nbsp;
       a(href="/articles/new") Crie uma!

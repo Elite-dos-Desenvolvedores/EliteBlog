@@ -27,3 +27,16 @@ block main
           b Sobre mim
         p.lead.text-center.text-lg-left
           | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur imperdiet ligula ut massa pharetra, sit amet imperdiet elit semper. Donec vitae risus mauris.
+        - if (likedArticles.length > 0)
+            p.lead.mb-0.mt-2
+              b Artigos que gostei
+            .row
+              each like in likedArticles
+                .col-12
+                  .row
+                    .col-4
+                      img.img-fluid.post-img(src = like.article.imageHref)
+                    .col-8
+                      h4
+                        b=like.article.title
+                      p=like.article.body

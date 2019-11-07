@@ -15,59 +15,68 @@ const ImageService = require('../../config/pkgcloud');
 const {
   isObjectId
 } = require('../utils');
+const Like = mongoose.model('Like');
 
 /**
  * Load
  */
 exports.load = async (function* (req, res, next, param) {
   try {
-    var by;
+    var options = {};
     if (isObjectId(param))
-      by = {
-        _id: param
-      }
+      options._id = param;
     else
-      by = {
-        clean_title: param
-      }
-    req.article = yield Article.findOne(by).populate('user').exec()
-    if (!req.article) return next(new Error('O post não foi encontrado'));
+      options.clean_title = param;
+
+    const article = yield Article.findOne(options).populate('user').populate('comments.user').then(async result => {
+      result.likes = await Like.find({ article: result._id })
+      result.hasLiked = result.likes.find(like => like.user._id.equals(req.user._id)) ? true : false
+      return Promise.resolve(result);
+    });
+    if (!article)
+      return next(new Error('O post não foi encontrado'));
+    req.article = article;
   } catch (err) {
     return next(err);
   }
   next();
 });
 
+async function listBy(options = {}, page = 1, limit = 30) {
+  return Article.find(options, null, {
+    'sort': {
+      'createdAt': -1
+    },
+  }).skip(page * limit).limit(limit).exec().then(async articles => {
+    return await Promise.all(articles.map(async (article) => {
+      return await retrieveImage(article.image.id).then(href => {
+        article.imageHref = href;
+        return Promise.resolve(article);
+      }).catch(err => {
+        throw err;
+      });
+    }));
+  })
+}
+
+exports.listBy = listBy;
+
 /**
  * List
  */
-
-exports.index = async (function* (req, res) {
+exports.index = async function (req, res) {
   const page = (req.query.page > 0 ? req.query.page : 1) - 1;
-  const _id = req.query.item;
-  const limit = 30;
-  const options = {
-    limit: limit,
-    page: page
-  };
-
-  if (_id) options.criteria = {
-    _id
-  };
-
-  const articles = yield Article.list(options);
-  const allArticles = yield Article.find();
-  const count = yield Article.countDocuments();
-
-  res.render('articles/index', {
-    title: 'Postagens',
-    articles,
-    allArticles,
-    retrieveImage,
-    page: page + 1,
-    pages: Math.ceil(count / limit)
+  const count = await Article.countDocuments();
+  const limit = 10;
+  listBy({}, page, limit).then(articles => {
+    res.render('articles/index', {
+      title: 'Postagens',
+      allArticles: articles,
+      page: page + 1,
+      pages: Math.ceil(count / limit)
+    });
   });
-});
+};
 
 /**
  * New article
@@ -128,32 +137,41 @@ exports.update = async (function* (req, res) {
   }
 });
 
-const retrieveImage = async (function* (image, cb) {
-  if (!image)
-    return null
-
-  ImageService.getFile(process.env.IMAGER_S3_BUCKET, image.id, function (err) {
-    if (err)
-      throw err;
-
-    cb(ImageService.s3.endpoint.href + process.env.IMAGER_S3_BUCKET + "/" + image.id)
-  });
-});
-
 /**
  * Show
  */
-exports.show = async (function* (req, res) {
+exports.show = function (req, res) {
   const user = req.user
-  retrieveImage(req.article.image, function (imageHref) {
+  var article = req.article;
+  console.log("Article", article);
+  retrieveImage(article.image.id).then(href => {
+    article.imageHref = href;
     res.render('articles/show', {
-      title: req.article.title,
-      article: req.article,
-      imageHref: imageHref,
-      user: user
+      article,
+      user
     });
   });
-});
+};
+
+/**
+ * Like
+ */
+exports.like = function (req, res) {
+  var liked = req.article.likes.find(like => like.user._id.equals(req.user._id));
+  if (!liked) {
+    const like = new Like();
+    like.user = req.user._id;
+    like.article = req.article._id;
+    like.save().then((liked) => {
+      req.article.likes.push(liked._id);
+      res.status(201).json({ alreadyLiked: false });
+    })
+  } else {
+    Like.deleteOne({ _id: liked._id }).then(() => {
+      res.status(200).json({ alreadyLiked: true });
+    });
+  }
+};
 
 /**
  * Delete an article
@@ -164,3 +182,16 @@ exports.destroy = async (function* (req, res) {
   req.flash('info', 'Post deletado com sucesso!');
   res.redirect('/articles');
 });
+
+async function retrieveImage(imageId) {
+  return new Promise((resolve, reject) => {
+    ImageService.getFile(process.env.IMAGER_S3_BUCKET, imageId, function (err) {
+      if (err)
+        return reject(err);
+
+      return resolve(ImageService.s3.endpoint.href + process.env.IMAGER_S3_BUCKET + "/" + imageId);
+    });
+  });
+}
+
+exports.retrieveImage = retrieveImage;

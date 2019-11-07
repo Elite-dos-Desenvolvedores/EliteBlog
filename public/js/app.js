@@ -71,3 +71,38 @@ setTimeout(function() {
 setTimeout(function() {
 document.getElementById("members-list").style.display = "block";
 }, 2000);
+
+var like_lock = false;
+$("#add_like").on('submit', e => {
+  e.preventDefault();
+
+  if (like_lock)
+    return false;
+  
+  like_lock = true;
+  $.ajax({
+    url: "/articles/" + e.target.getAttribute('data-article') + "/like",
+    method: "POST",
+    responseType: "json",
+    credentials: 'same-origin',
+    headers: {
+      'CSRF-Token': e.target.querySelector('input[name="_csrf"]').getAttribute('value')
+    },
+  }).success(function(response, status, xhr) {
+    var likes = $("#likes");
+    var count = parseInt(likes.text());
+    if (!response.alreadyLiked) {
+      $("#like_button").css('display', 'none');
+      $("#unlike_button").css('display', 'block');
+      likes.text(count + 1);
+    } else  {
+      $("#unlike_button").css('display', 'none');
+      $("#like_button").css('display', 'block');
+      likes.text(count - 1);
+    }
+    like_lock = false;
+  }).error(function(xhr, status, err) {
+    console.error(err);
+    like_lock = false;
+  });
+});

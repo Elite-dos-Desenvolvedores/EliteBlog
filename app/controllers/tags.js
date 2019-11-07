@@ -9,30 +9,24 @@ const {
   wrap: async
 } = require('co');
 const Article = mongoose.model('Article');
+const articleService = require('./articles');
+
 /**
  * List items tagged with a tag
  */
 
 exports.index = async (function* (req, res) {
-  const criteria = {
-    tags: req.params.tag
-  };
-  const page = (req.params.page > 0 ? req.params.page : 1) - 1;
-  const limit = 30;
-  const options = {
-    limit: limit,
-    page: page,
-    criteria: criteria
-  };
-
-  const articles = yield Article.list(options);
-  const count = yield Article.countDocuments(criteria);
-
-  res.render('articles/index', {
-    title: 'Posts com a tag' + req.params.tag,
-    articles: articles,
-    page: page + 1,
-    pages: Math.ceil(count / limit)
+  const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+  const count = yield Article.countDocuments();
+  const limit = 25;
+  articleService.listBy({ tags: req.params.tag }, page, limit).then(articles => {
+    // ele volta pra index, sóp q mstrando as q tem as tags? ele ia pra /tags/algumatag e só mostrava as que tinham "algumatag"
+    res.render('articles/tags', {
+      title: 'Tag "' + req.params.tag + '"',
+      allArticles: articles,
+      page: page + 1,
+      pages: Math.ceil(count / limit)
+    });
   });
 });
 

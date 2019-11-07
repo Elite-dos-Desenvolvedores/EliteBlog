@@ -43,10 +43,10 @@ const ArticleSchema = new Schema({
   comments: [{
     body: {
       type: String,
-      default: '',
+      required: true,
       maxlength: 1000
     },
-    user: {
+    user: { // aka author
       type: Schema.ObjectId,
       ref: 'User'
     },
@@ -68,9 +68,10 @@ const ArticleSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  likes: {
-    type: Number
-  }
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Like'
+  }]
 });
 
 /**

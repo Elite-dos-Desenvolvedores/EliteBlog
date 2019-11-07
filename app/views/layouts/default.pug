@@ -11,7 +11,8 @@ html(lang="pt-BR")
         block main
       .messages
         include ../includes/messages.pug
-      if widgets
+
+      - if(widgets)
         .row
           .col-md-8
             .content

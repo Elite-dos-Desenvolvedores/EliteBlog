@@ -11,6 +11,8 @@ const {
 const User = mongoose.model('User');
 const UserDiscord = mongoose.model('UserDiscord');
 const { isObjectId } = require('../utils');
+const Like = mongoose.model('Like');
+const articleService = require("./articles");
 
 function isUINT(v) {
   if (v.length < 16)
@@ -79,11 +81,21 @@ exports.create = async (function* (req, res) {
  *  Show profile
  */
 
-exports.show = function (req, res) {
+exports.show = async function (req, res) {
   const user = req.profile;
+  const likedArticles = await Like.find({ user: user._id }).populate('article')
+  await Promise.all(likedArticles.map(async (like) => {
+    return await articleService.retrieveImage(like.article.image.id).then(href => {
+      like.article.imageHref = href;
+      return Promise.resolve(like);
+    }).catch(err => {
+      throw err;
+    });
+  }));
   res.render('users/show', {
     title: user.name,
-    user: user
+    user: user,
+    likedArticles
   });
 };
 
