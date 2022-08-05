@@ -43,7 +43,7 @@
     "imager": "^1.0.0-alpha1",
     "make": "^0.8.1",
     "method-override": "~3.0.0",
-    "mongoose": "~5.5.11",
+    "mongoose": "~5.7.5",
     "morgan": "~1.9.1",
     "multer": "^1.4.2",
     "notifier": "~0.2.0",
